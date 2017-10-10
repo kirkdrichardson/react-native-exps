@@ -1,16 +1,21 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TextInput } from 'react-native';
 
-import {observable, computed} from 'mobx';
+import {observable, computed, action} from 'mobx';
 import {observer} from 'mobx-react';
 
 
 class TranslationText {
   @observable text = '';
+  @action OnUsrInput(input) {
+    return this.text = input;
+  }
   @computed get translation() {
       return this.text.split(' ').map(word => word && '🍕').join(' ');
   }
 }
+
+
  const store = new TranslationText();
 
 
@@ -22,7 +27,7 @@ class App extends React.Component {
         <TextInput
           style={{height: 40}}
           placeholder="Type here to translate!"
-          onChangeText={(input) => store.text = input}
+          onChangeText={(input) => store.OnUsrInput(input)}
         />
         <Text style={{padding: 10, fontSize: 42}}>
           {store.translation}
@@ -33,31 +38,3 @@ class App extends React.Component {
 }
 
 export default App;
-
-
-//       <View style={{
-//         backgroundColor: '#222',
-//         flex: 1,
-//         flexDirection: 'column',
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//       }}>
-//
-//         <Image style={{width: 80, height: 80, borderRadius: 50}}
-//           source={require('./assets/cookieMonster.jpg')}/>
-//
-//         <View style={styles.circle} />
-//         <View style={{ width: 80, height: 80, borderRadius: 50, backgroundColor: 'steelblue'}} />
-//       </View>
-//     );
-//   }
-// }
-//
-//  const styles = StyleSheet.create({
-//       circle: {
-//         width: 80,
-//         height: 80,
-//         borderRadius: 50,
-//         backgroundColor: 'skyblue'
-//       }
-//  });
